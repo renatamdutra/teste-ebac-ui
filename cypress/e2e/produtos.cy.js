@@ -16,7 +16,7 @@ describe('Funcionalidade página de produtos', () =>{
 
     });
 
-    it.only('deve adicionar um produto ao carrinho', () => {
+    it('deve adicionar um produto ao carrinho', () => {
         cy.get('[class="product-block grid"]')
             .contains('Apollo Running Short').click()
             cy.get('.button-variable-item-34').click()
