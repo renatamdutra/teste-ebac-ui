@@ -17,14 +17,22 @@ describe('Funcionalidade página de produtos', () =>{
     });
 
     it('deve adicionar um produto ao carrinho', () => {
-        cy.get('[class="product-block grid"]')
-            .contains('Apollo Running Short').click()
+            var quantidade = 1
+        
+            cy.get('[class="product-block grid"]')
+                .contains('Apollo Running Short').click()
             cy.get('.button-variable-item-34').click()
             cy.get(':nth-child(2) > .value > .variable-items-wrapper > .variable-item').click()
-            cy.get('.input-text').clear().type(2)
+            cy.get('.input-text').clear().type(quantidade)
             cy.get('.single_add_to_cart_button').click()
 
-            cy.get('.dropdown-toggle > .mini-cart-items').should('contain', 2)
+            cy.get('.dropdown-toggle > .mini-cart-items').should('contain', quantidade)
+            
+    });
+
+    it('deve adicionar produtos ao carrinho - usando comandos customizados', () => {
+        cy.addPodutos('Apollo Running Short', '36', 'Black', 1)
+        
     });
 
 });

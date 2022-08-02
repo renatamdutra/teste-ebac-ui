@@ -1,6 +1,7 @@
 ///<reference types="cypress" />
-var faker = require('faker');
+var faker = require('faker-br');
 const Faker = require('faker/lib');
+
 
 describe('Funcionalidade Pré cadastro', () => {
 
@@ -9,16 +10,24 @@ describe('Funcionalidade Pré cadastro', () => {
     });
 
     it('Deve completar o pré cadastro com sucesso', () => {
-        cy.get('#reg_email').type (faker.internet.email())
+        let nomeFaker = faker.name.firstName()
+        let sobrenomeFaker = faker.name.lastName()
+        let emailFaker = faker.internet.email(nomeFaker)
+
+        cy.get('#reg_email').type (emailFaker)
         cy.get('#reg_password').type ('rm123456!')
         cy.get(':nth-child(4) > .button').click()
 
         cy.get('.woocommerce-MyAccount-navigation-link--edit-account > a').click()
-        cy.get('#account_first_name').type(faker.name.firstName())
-        cy.get('#account_last_name').type(faker.name.lastName())
+        cy.get('#account_first_name').type(nomeFaker)
+        cy.get('#account_last_name').type(sobrenomeFaker)
         cy.get('.woocommerce-Button').click()
 
         cy.get('.woocommerce-message').should('contain', 'Detalhes da conta')
     });
+    it('Deve completar o pré cadastro usando comandos customizados', () => {
+        let emailFaker2 = faker.internet.email()
+        cy.preCadastro(emailFaker2, 'senha@forte', 'Renata', 'Machado')
+    });
 
-});
+}); 
